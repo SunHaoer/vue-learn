@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>06_列表渲染_过滤与排序</title>
+</head>
+<body>
+<!--
+1. 列表过滤
+2. 列表排序
+-->
+
+<div id="demo">
+  <input type="text" v-model="searchKey">
+  <ul>
+    <li v-for="(p, index) in filterPersons" :key="index">
+      {{index}} -- {{p.name}} -- {{p.age}}
+    </li>
+  </ul>
+  <button @click="orderType=0">原本排序</button>
+  <button @click="orderType=1">年龄升序</button>
+  <button @click="orderType=2">年龄降序</button>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+  const vm = new Vue({
+    el: '#demo',
+    data: {
+      searchKey: '',
+      orderType: 0,    // 0 原本排序, 1 年龄升序, 2 年龄降序
+      persons: [
+        {name: 'Tom', age: 28},
+        {name: 'Jack', age: 19},
+        {name: 'Jerry', age: 20},
+        {name: 'Rose', age: 21}
+      ]
+    },
+    computed: {    // 计算属性
+      filterPersons () {
+        const {searchKey, persons, orderType} = this    // 相关数据
+        let fPersons    // 最终返回的数据
+        fPersons = persons.filter(p => p.name.toLowerCase().indexOf(searchKey.toLowerCase()) != -1)    // 对persons过滤, indexOf当前子串在字符串的下标
+        // 排序
+        if(orderType != 0) {    // 非原本顺序
+          fPersons.sort(function (p1, p2) {    // 返回负数, p1在前, 降序
+            if(orderType == 1) {
+              return p1.age - p2.age
+            } else {
+              return p2.age - p1.age
+            }
+          })
+        }
+        return fPersons
+      }
+    },
+  })
+</script>
+</body>
+</html>
