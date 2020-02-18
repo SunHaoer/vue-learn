@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>08_条件渲染</title>
+</head>
+<body>
+<!--
+1. 条件渲染指令
+  v-if
+  v-else    // 直接移除标签, 内存中不存在
+  v-show    // 标签存在, 但不显示
+2. 比较v-if与v-show
+  如果需要频繁切换 v-show 较好
+-->
+
+<div id="demo">
+  <p v-if="ok">理你</p>
+  <p v-else>不理你</p>
+
+  <p v-show="ok">出来玩</p>
+  <p v-show="!ok">不出来玩</p>
+  <button @click="ok=!ok">改变主意</button>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+  const vm = new Vue({
+    el: '#demo',
+    data: {
+      ok: false,
+    }
+  })
+</script>
+</body>
+</html>
